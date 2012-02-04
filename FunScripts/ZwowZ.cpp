@@ -29,24 +29,19 @@ class npc_remove_pvp : public CreatureScript
   }
 		bool OnGossipSelect(Player *pPlayer, Creature *pCreature, uint32 /*uiSender*/, uint32 uiAction)
 		{
-            //Remove me from pvp
-            if (uiAction == GOSSIP_ACTION_INFO_DEF+1000)
-            {
-            //pPlayer->CastSpell(pPlayer, 20762, true),//Soul Stone
-            pPlayer->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_CONTESTED_PVP),
-            //m_contestedPvPTimer = 0, // another method I think for contested
-            //pPlayer->SetContestedPvPTimer(3), //another method
-            pPlayer->RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_PVP),
-            pPlayer->HasByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP),
-            //pPlayer->RemoveFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_PVP),//another method
-            pPlayer->HasAuraType(SPELL_AURA_MOD_FACTION),
-            pPlayer->RemoveAura(SPELL_AURA_MOD_FACTION),
-            pPlayer->HasUnitState(UNIT_STAT_ATTACK_PLAYER),
-            pPlayer->ClearUnitState(UNIT_STAT_ATTACK_PLAYER),
-            pPlayer->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_PVP_TIMER),
-            pPlayer->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_IN_PVP), 
-            pPlayer->CLOSE_GOSSIP_MENU();
-			}
+        //Remove me from pvp
+        if (uiAction == GOSSIP_ACTION_INFO_DEF+1000)
+        {
+			pPlayer->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_CONTESTED_PVP),//contested pvp flag
+			pPlayer->RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_PVP),//pvp flag
+			pPlayer->RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP),//ffa pvp flag
+			pPlayer->RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_PVP),//pvp flag
+			pPlayer->RemoveAura(SPELL_AURA_MOD_FACTION),
+			pPlayer->ClearUnitState(UNIT_STAT_ATTACK_PLAYER),
+			pPlayer->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_PVP_TIMER),
+			pPlayer->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_IN_PVP), 
+			pPlayer->CLOSE_GOSSIP_MENU();
+		}
 		return true;
 		}
 };
